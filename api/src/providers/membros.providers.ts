@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
-import { Membros } from './membros.entity';
+import { Membro } from 'src/models/membros.entity';
 
 export const membroProviders = [
   {
     provide: 'MEMBRO_REPOSITORY',
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Membros),
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Membro),
     inject: ['DATA_SOURCE'],
   },
 ];

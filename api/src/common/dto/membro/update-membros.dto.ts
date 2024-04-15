@@ -4,4 +4,6 @@ import { CreateMembrosDto } from './create-membros.dto'
 
 
 
-export class UpdateMembroDto extends PartialType (CreateMembrosDto) {}
+export class UpdateMembroDto extends PartialType (CreateMembrosDto) {
+    
+}
