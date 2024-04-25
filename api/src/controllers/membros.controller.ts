@@ -10,7 +10,7 @@ export class membroController {
 
   @Get()
   async listarMembros(): Promise<Membro[]>{
-    return this.membroService.listar();
+    return this.membroService.listarMembros();
   }
 
   @Post()
@@ -19,8 +19,8 @@ export class membroController {
   }
 
   @Get(':id')
-  async ListarPorCpf(@Param('id') id: number): Promise<Membro>{
-    const MembroAchado = await this.membroService.listarPorId(id);
+  async ListarPorId(@Param('id') id: number): Promise<Membro>{
+    const MembroAchado = await this.membroService.listarMembroPorId(id);
     if (!MembroAchado) {
       throw new NotFoundException(`Membro com o id: ${id} Não encontrado`);
     }

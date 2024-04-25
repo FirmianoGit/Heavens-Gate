@@ -14,13 +14,13 @@ export class membroService {
   ) {}
 
   //FUNÇÃO QUE RETORNA TODAS AS ENTIDADES DO TIPO MEMBRO PERSISTIDAS
-  async listar(): Promise<Membro[]> {
+  async listarMembros(): Promise<Membro[]> {
 
     //RETORNO DE TODAS AS ENTIDADES QUE ESTAO NO BANCO DE DADOS 
     return await this.membroRepository.find()
   }
 
-  async listarPorId(id: number): Promise<Membro>{
+  async listarMembroPorId(id: number): Promise<Membro>{
 
     const options: FindOneOptions<Membro> = {
       where: { id: id },
@@ -38,24 +38,19 @@ export class membroService {
 
 
   async criarMembro(createMembrosDto: CreateMembrosDto): Promise<Membro>{
-
-    
     try{
       const NovoMembro = this.membroRepository.create(createMembrosDto);
       return this.membroRepository.save(NovoMembro)
     }
     catch{
-
       throw new NotAcceptableException(`O membro não pode ser criado, verifique se as informações estão corretas`)
     }
-
-    
   } 
 
   
   async modificarMembro(id:number, updateMembroDto: UpdateMembroDto): Promise<Membro>{
     
-    const MembroAchado = await this.listarPorId(id);
+    const MembroAchado = await this.listarMembroPorId(id);
 
     this.membroRepository.merge(MembroAchado, updateMembroDto);
     
@@ -63,7 +58,7 @@ export class membroService {
   }
 
 async DeletarMembro(id: number): Promise<void>{
-  const MembroAchado = await this.listarPorId(id);
+  const MembroAchado = await this.listarMembroPorId(id);
   await this.membroRepository.delete(MembroAchado);
 }
 

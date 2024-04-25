@@ -3,7 +3,11 @@ import {
     Entity,
     Index,
     PrimaryGeneratedColumn,
+    ManyToOne,
+    JoinColumn
   } from "typeorm";
+  import { Gestor } from "./gestor.entity";
+import { Sede } from "./sede.entity";
 
   @Index("GESTOR_ID", ["gestorId"], {})
   @Index("SEDE_ID", ["sedeId"], {})
@@ -38,6 +42,13 @@ import {
   
     @Column("int", { name: "SEDE_ID", nullable: true })
     sedeId: number | null;
+
+    @ManyToOne(() => Sede, (sede) => sede.congregacaos, {
+      onDelete: "NO ACTION",
+      onUpdate: "NO ACTION",
+    })
+    @JoinColumn([{ name: "SEDE_ID", referencedColumnName: "id" }])
+    sede: Sede;
   
   }
   

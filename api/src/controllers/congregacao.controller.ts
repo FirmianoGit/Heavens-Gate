@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CongregacaoService } from '../services/congregacao.service';
 import { CreateCongregacaoDto } from '../common/dto/congregacao/create-congregacao.dto';
 import { UpdateCongregacaoDto } from '../common/dto/congregacao/update-congregacao.dto';
@@ -8,27 +8,27 @@ export class CongregacaoController {
   constructor(private readonly congregacaoService: CongregacaoService) {}
 
   @Post()
-  create(@Body() createCongregacaoDto: CreateCongregacaoDto) {
-    return this.congregacaoService.create(createCongregacaoDto);
+  CriarCongregacao(@Body() createCongregacaoDto: CreateCongregacaoDto) {
+    return this.congregacaoService.CriarCongregacao(createCongregacaoDto);
   }
 
   @Get()
-  findAll() {
-    return this.congregacaoService.findAll();
+  ListarCongregacoes() {
+    return this.congregacaoService.ListarCongregacoes();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.congregacaoService.findOne(+id);
+  ListarCongregacaoPorId(@Param('id') id: number) {
+    return this.congregacaoService.ListarCongregacoesPorId(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCongregacaoDto: UpdateCongregacaoDto) {
-    return this.congregacaoService.update(+id, updateCongregacaoDto);
+  @Put(':id')
+  ModificarCongragacao(@Param('id') id: number, @Body() updateCongregacaoDto: UpdateCongregacaoDto) {
+    return this.congregacaoService.ModificarCongregacao(id, updateCongregacaoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.congregacaoService.remove(+id);
+  RemoverCongregacao(@Param('id') id: number) {
+    return this.congregacaoService.DeletarCongregacao(id);
   }
 }
