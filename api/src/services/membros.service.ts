@@ -59,7 +59,7 @@ export class membroService {
 
 async DeletarMembro(id: number): Promise<void>{
   const MembroAchado = await this.listarMembroPorId(id);
-  await this.membroRepository.delete(MembroAchado);
+  await this.membroRepository.remove(MembroAchado);
 }
 
 }

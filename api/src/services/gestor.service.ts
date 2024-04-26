@@ -63,6 +63,7 @@ export class GestorService {
   }
 
  async RemoverGestor(id: number): Promise<void> {
-    await this.gestorRepository.delete({id: id});
+  const GestorAchado = await this.ListarGestorPorId(id);
+  await this.gestorRepository.remove(GestorAchado);
   }
 }

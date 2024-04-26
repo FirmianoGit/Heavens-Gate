@@ -60,6 +60,6 @@ export class CongregacaoService {
 
 async DeletarCongregacao(id: number): Promise<void>{
   const congregacaoAchada = await this.ListarCongregacoesPorId(id);
-  await this.congregacaoRepository.delete(congregacaoAchada);
+  await this.congregacaoRepository.remove(congregacaoAchada);
 }
 }

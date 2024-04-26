@@ -9,7 +9,7 @@ export class SedeService {
 
   constructor(
     @Inject('SEDE_REPOSITORY')
-    private readonly sedeRepository: Repository<Sede>
+    private sedeRepository: Repository<Sede>
   ) {}
 
   async CriarSede(createSedeDto: CreateSedeDto): Promise<Sede> {  
@@ -23,17 +23,21 @@ export class SedeService {
   }
 
   async ListarSedePorId(id: number): Promise<Sede> {
-    try{
-      return await this.sedeRepository.findOneBy({id: id});
-    }
-    catch{
-      throw new HttpException(`A sede não foi encontrada, verifique se as informações estão corretas`, HttpStatus.NOT_FOUND);
-    }
+    
+      const SedeAchada = await this.sedeRepository.findOneBy({id: id});
+
+      if(!SedeAchada){
+        throw new HttpException(`A sede não foi encontrada, verifique se as informações estão corretas`, HttpStatus.NOT_FOUND);
+      }
+
+      return SedeAchada
+      
+    
   }
 
   async ListarSedes(): Promise<Sede[]> {
     try{
-      return await this.sedeRepository.find()
+      return await this.sedeRepository.find();
     }
     catch{
       throw new HttpException(`A sede não foi encontrada, verifique se as informações estão corretas`, HttpStatus.NOT_FOUND);
@@ -53,8 +57,14 @@ export class SedeService {
     }
   }
 
-  async DeletarSede(id: number): Promise<void> {
+  async DeletarSede(id: number): Promise<Sede> {
   const SedeAchada = await this.ListarSedePorId(id);
-  await this.sedeRepository.delete(SedeAchada)
+  const teste = SedeAchada;
+
+  if(!SedeAchada){
+    throw new HttpException('Sede não encontrada', HttpStatus.NOT_FOUND);
+  }
+  await this.sedeRepository.remove(SedeAchada);
+  return teste;
   }
 }
