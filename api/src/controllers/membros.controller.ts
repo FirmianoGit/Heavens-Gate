@@ -14,7 +14,7 @@ export class membroController {
   }
 
   @Post()
-  async CriarMembro( @Body() createMembrodto: CreateMembrosDto){
+  async CriarMembro(@Body() createMembrodto: CreateMembrosDto){
     return this.membroService.criarMembro(createMembrodto);
   }
 
