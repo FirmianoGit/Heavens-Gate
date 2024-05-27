@@ -1,3 +1,5 @@
+import { Frequenta } from "src/import/entities/Frequenta";
+import { Usuario } from "src/models/usuario.entity";
 import {
   Column,
   Entity,
@@ -9,15 +11,16 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Historico } from "./historico.entity";
+import { Congregacao } from "./congregacao.entity";
+import { Grupo } from "src/grupo/entities/grupo.entity";
 
 @Index("IDENTIDADE", ["identidade"], { unique: true })
 @Index("CPF", ["cpf"], { unique: true })
 @Index("CONGREGACAO_ID", ["congregacaoId"], {})
 @Index("USUARIO_ID", ["usuarioId"], {})
 @Entity("membro", { schema: "heavenpath" })
- 
 export class Membro {
-
   @PrimaryGeneratedColumn({ type: "int", name: "ID" })
   id: number;
 
@@ -128,4 +131,33 @@ export class Membro {
 
   @Column("int", { name: "USUARIO_ID", nullable: true })
   usuarioId: number | null;
+
+  // @OneToMany(() => Frequenta, (frequenta) => frequenta.membro)
+  // frequentas: Frequenta[];
+
+  @OneToMany(() => Historico, (historico) => historico.membro)
+  historicos: Historico[];
+
+  @ManyToOne(() => Congregacao, (congregacao) => congregacao.membros, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "CONGREGACAO_ID", referencedColumnName: "id" }])
+  congregacao: Congregacao;
+
+  @ManyToOne(() => Usuario, (usuario) => usuario.membros, {
+    onDelete: "NO ACTION",
+    onUpdate: "NO ACTION",
+  })
+  @JoinColumn([{ name: "USUARIO_ID", referencedColumnName: "id" }])
+  usuario: Usuario;
+
+  @ManyToMany(() => Grupo, (grupo) => grupo.membros)
+  @JoinTable({
+    name: "participa",
+    joinColumns: [{ name: "MEMBRO_ID", referencedColumnName: "id" }],
+    inverseJoinColumns: [{ name: "GRUPO_ID", referencedColumnName: "id" }],
+    schema: "heavenpath",
+  })
+  grupos: Grupo[];
 }

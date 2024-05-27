@@ -9,7 +9,7 @@ import {
   } from "typeorm";
   import { Congregacao } from "./congregacao.entity";
   import { Sede } from "./sede.entity";
-
+  import { Usuario } from "src/import/entities/Usuario";
 
   @Index("CPF", ["cpf"], { unique: true })
   @Index("USUARIO_ID", ["usuarioId"], {})
@@ -31,6 +31,9 @@ import {
 
     @OneToMany(() => Congregacao, (congregacao) => congregacao.gestorId)
     congregacaos: Congregacao[];
+
+    @JoinColumn([{ name: "USUARIO_ID", referencedColumnName: "id" }])
+    usuario: Usuario;
 
     @OneToMany(() => Sede, (sede) => sede.gestor)
     sedes: Sede[];
