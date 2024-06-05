@@ -9,8 +9,8 @@ import {
   } from "typeorm";
   import { Gestor } from "./gestor.entity";
 import { Sede } from "./sede.entity";
-import { Evento } from "src/import/entities/Evento";
-import { Grupo } from "src/grupo//entities/grupo.entity";
+import { Evento } from "./evento.entity";
+import { Grupo } from "src/models/grupo.entity";
 import { Membro } from "./membros.entity";
 
 @Index("GESTOR_ID", ["gestorId"], {})
@@ -61,8 +61,8 @@ export class Congregacao {
   @JoinColumn([{ name: "SEDE_ID", referencedColumnName: "id" }])
   sede: Sede;
 
-  // @OneToMany(() => Evento, (evento) => evento.congregacao)
-  // eventos: Evento[];
+  @OneToMany(() => Evento, (evento) => evento.congregacao)
+  eventos: Evento[];
 
   @OneToMany(() => Grupo, (grupo) => grupo.congregacao)
   grupos: Grupo[];

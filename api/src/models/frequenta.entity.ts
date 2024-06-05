@@ -1,8 +1,8 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { Membro } from "./Membro";
-import { Evento } from "./Evento";
+import { Membro } from "src/models/membros.entity";
+import { Evento } from "./evento.entity"; 
 
-@Index("EVENTO_ID", ["eventoId"], {})
+@Index("EVENTO_ID", ["eventoId"],  {})
 @Entity("frequenta", { schema: "heavenpath" })
 export class Frequenta {
   @Column("int", { primary: true, name: "MEMBRO_ID" })

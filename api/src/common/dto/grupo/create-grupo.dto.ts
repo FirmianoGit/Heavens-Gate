@@ -6,6 +6,7 @@ export class CreateGrupoDto {
     @IsString()
     descricao: string;
 
+    @IsNotEmpty()
     @IsInt()
     congregacaoId: number | null;
 }

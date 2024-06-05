@@ -7,7 +7,9 @@ import { GestorModule } from './gestor.module';
 import { SedeModule } from './sede.module';
 import { UsuariosModule } from 'src/modules/usuarios.module';
 import { HistoricoModule } from 'src/modules/historico.module';
-import { GrupoModule } from 'src/grupo/grupo.module';
+import { GrupoModule } from './grupo.module';
+import { FrequentaModule } from './frequenta.module';
+import { EventoModule } from './evento.module';
 
 
 @Module({
@@ -18,7 +20,9 @@ import { GrupoModule } from 'src/grupo/grupo.module';
     SedeModule,
     UsuariosModule,
     HistoricoModule,
-    GrupoModule
+    GrupoModule,
+    FrequentaModule,
+    EventoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

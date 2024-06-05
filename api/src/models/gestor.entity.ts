@@ -9,7 +9,7 @@ import {
   } from "typeorm";
   import { Congregacao } from "./congregacao.entity";
   import { Sede } from "./sede.entity";
-  import { Usuario } from "src/import/entities/Usuario";
+  import { Usuario } from "./usuario.entity";
 
   @Index("CPF", ["cpf"], { unique: true })
   @Index("USUARIO_ID", ["usuarioId"], {})

@@ -1,4 +1,4 @@
-import { Frequenta } from "src/import/entities/Frequenta";
+import { Frequenta } from "./frequenta.entity";
 import { Usuario } from "src/models/usuario.entity";
 import {
   Column,
@@ -13,7 +13,7 @@ import {
 } from "typeorm";
 import { Historico } from "./historico.entity";
 import { Congregacao } from "./congregacao.entity";
-import { Grupo } from "src/grupo/entities/grupo.entity";
+import { Grupo } from "src/models/grupo.entity";
 
 @Index("IDENTIDADE", ["identidade"], { unique: true })
 @Index("CPF", ["cpf"], { unique: true })
@@ -132,8 +132,8 @@ export class Membro {
   @Column("int", { name: "USUARIO_ID", nullable: true })
   usuarioId: number | null;
 
-  // @OneToMany(() => Frequenta, (frequenta) => frequenta.membro)
-  // frequentas: Frequenta[];
+  @OneToMany(() => Frequenta, (frequenta) => frequenta.membro)
+  frequentas: Frequenta[];
 
   @OneToMany(() => Historico, (historico) => historico.membro)
   historicos: Historico[];

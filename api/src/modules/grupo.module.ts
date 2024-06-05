@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { GrupoService } from './grupo.service';
-import { GrupoController } from './grupo.controller';
+import { GrupoService } from '../services/grupo.service';
+import { GrupoController } from '../controllers/grupo.controller';
 import { DatabaseModule } from 'src/database/database.module';
-import { grupoProviders } from 'src/providers/grupo..provider';
+import { grupoProviders } from 'src/providers/grupo.provider';
 
 @Module({
   imports: [DatabaseModule],
