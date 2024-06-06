@@ -22,6 +22,12 @@ export class UsuariosController {
     return this.usuariosService.listarUsuarioPorId(id);
   }
 
+  @Get(':id/role')
+  async getRole(@Param('id') id: number) {
+    const role = await this.usuariosService.getUserRole(id);
+    return { role };
+  }
+
   @Put(':id')
   ModificarUsuario(@Param('id') id: number, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuariosService.modificarUsuario(id, updateUsuarioDto);
@@ -29,6 +35,6 @@ export class UsuariosController {
 
   @Delete(':id')
   DeletarUsuario(@Param('id') id: number) {
-    return this.usuariosService.DeletarMembro(id);
+    return this.usuariosService.deletarUsuario(id);
   }
 }

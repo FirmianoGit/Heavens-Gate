@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/
 import { EventoService } from '../services/evento.service';
 import { CreateEventoDto } from '../common/dto/evento/create-evento.dto';
 import { UpdateEventoDto } from '../common/dto/evento/update-evento.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('evento')
 export class EventoController {
@@ -20,6 +21,26 @@ export class EventoController {
   @Get(':id')
   ListarEventoPorId(@Param('id') id: string) {
     return this.eventoService.ListarEventoPorId(+id);
+  }
+
+  @Get('gestor-de-sede')
+  async listarEventosParaGestorDeSede() {
+    return this.eventoService.listarEventosParaGestorDeSede();
+  }
+
+  @Get('gestor/:congregacaoId')
+  async listarEventosParaGestor(@Param('congregacaoId') congregacaoId: number) {
+    return this.eventoService.listarEventosParaGestor(congregacaoId);
+  }
+
+  @Get('/gestor-de-sede/:gestorId')
+  getEventosPorGestorDeSede(@Param('gestorId') gestorId: number) {
+    return this.eventoService.getEventosPorGestorDeSede(gestorId);
+  }
+
+  @Get('/gestor/:congregacaoId')
+  getEventosPorCongregacao(@Param('congregacaoId') congregacaoId: number) {
+    return this.eventoService.getEventosPorCongregacao(congregacaoId);
   }
 
   @Put(':id')

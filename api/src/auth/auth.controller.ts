@@ -1,22 +1,29 @@
-// import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
-// import { AuthService } from './auth.service';
-// import { LocalAuthGuard } from './local-auth.guard'; // Guarda que você precisará implementar para a autenticação local
-// import { Public } from './public.decorator'; // Decorador para marcar rotas públicas que não requerem autenticação
+import { Controller, Post, Body, UnauthorizedException, Get, Req } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { UsuariosService } from '../services/usuarios.service';
+import { Param } from '@nestjs/common';
 
-// @Controller('auth')
-// export class AuthController {
-//   constructor(private authService: AuthService) {}
+@Controller('auth')
+export class AuthController {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usuariosService: UsuariosService,
+  ) {}
 
-//   @Public()
-//   @UseGuards(LocalAuthGuard) // Usa o guarda de autenticação local para verificar as credenciais
-//   @Post('login')
-//   async login(@Request() req) {
-//     return this.authService.login(req.user);
-//   }
+  @Post('login')
+  async login(@Body() body: { chave: string; senha: string }) {
+    const user = await this.authService.validateUser(body.chave, body.senha);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    const token = await this.authService.login(user);
+    const role = await this.usuariosService.getUserRole(user.id);
+    return { ...token, role };
+  }
 
-//   @Public()
-//   @Post('register')
-//   async register(@Body() body: any) { // Adapte para a estrutura do seu modelo de usuário
-//     return this.authService.register(body);
-//   }
-// }
+  @Get('role/:id')
+  async getRole(@Param('id') id: number) {
+    const role = await this.usuariosService.getUserRole(id);
+    return { role };
+  }
+}

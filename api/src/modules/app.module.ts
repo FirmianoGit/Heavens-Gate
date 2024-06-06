@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from '../controllers/app.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '../auth/auth.module';
 import { AppService } from '../services/app.service';
 import { membroModule } from './membros.module';
 import { CongregacaoModule } from './congregacao.module';
@@ -14,6 +16,17 @@ import { EventoModule } from './evento.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'heavenpath',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    AuthModule,
     membroModule,
     CongregacaoModule,
     GestorModule,

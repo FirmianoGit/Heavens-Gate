@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosService } from '../services/usuarios.service';
 import { UsuariosController } from '../controllers/usuarios.controller';
-import { DatabaseModule } from 'src/database/database.module';
-import { databaseProviders } from 'src/database/database.providers';
-import { usuarioProviders } from 'src/providers/usuario.provider';
+import { Usuario } from '../models/usuario.entity';
+import { Gestor } from '../models/gestor.entity';
+import { Sede } from '../models/sede.entity';
+import { Membro } from '../models/membros.entity';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([Usuario, Gestor, Sede, Membro])],
   controllers: [UsuariosController],
-  providers: [
-    ...usuarioProviders,
-    UsuariosService],
+  providers: [UsuariosService],
+  exports: [UsuariosService],
 })
 export class UsuariosModule {}

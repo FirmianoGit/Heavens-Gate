@@ -1,62 +1,77 @@
-import { Inject, Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, NotAcceptableException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Usuario } from '../models/usuario.entity';
+import { Gestor } from '../models/gestor.entity';
+import { Sede } from '../models/sede.entity';
+import { Membro } from '../models/membros.entity';
 import { CreateUsuarioDto } from '../common/dto/usuario/create-usuario.dto';
 import { UpdateUsuarioDto } from '../common/dto/usuario/update-usuario.dto';
-import { FindOneOptions, Repository } from 'typeorm';
-import { Usuario } from '../models/usuario.entity';
 
 @Injectable()
 export class UsuariosService {
-  //CONSTRUTOR FAZENDO A INJEÇÃO DE DEPENDENCIA DO PROVIDER
   constructor(
-    @Inject('USUARIO_REPOSITORY')
+    @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
+    @InjectRepository(Gestor)
+    private gestorRepository: Repository<Gestor>,
+    @InjectRepository(Sede)
+    private sedeRepository: Repository<Sede>,
+    @InjectRepository(Membro)
+    private membroRepository: Repository<Membro>,
   ) {}
 
-  //FUNÇÃO QUE RETORNA TODAS AS ENTIDADES DO TIPO MEMBRO PERSISTIDAS
   async listarUsuarios(): Promise<Usuario[]> {
-
-    //RETORNO DE TODAS AS ENTIDADES QUE ESTAO NO BANCO DE DADOS 
-    return await this.usuarioRepository.find()
+    return this.usuarioRepository.find();
   }
 
-  async listarUsuarioPorId(id: number): Promise<Usuario>{
-
-    const options: FindOneOptions<Usuario> = {
-      where: { id: id },
-    };
-    
-    const UsuarioEncontrado = this.usuarioRepository.findOne(options)
-
-    if(!UsuarioEncontrado){
-
-      throw new NotFoundException(`Usuario com o id ${id} não encontrado`)
+  async listarUsuarioPorId(id: number): Promise<Usuario> {
+    const usuarioEncontrado = await this.usuarioRepository.findOne({ where: { id } });
+    if (!usuarioEncontrado) {
+      throw new NotFoundException(`Usuario com o id ${id} não encontrado`);
     }
-
-    return UsuarioEncontrado
+    return usuarioEncontrado;
   }
 
-  async criarUsuario(createUsuarioDto: CreateUsuarioDto): Promise<Usuario>{
-    try{
-      const NovoUsuario = this.usuarioRepository.create(createUsuarioDto);
-      return this.usuarioRepository.save(NovoUsuario)
+  async criarUsuario(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
+    try {
+      const novoUsuario = this.usuarioRepository.create(createUsuarioDto);
+      return this.usuarioRepository.save(novoUsuario);
+    } catch {
+      throw new NotAcceptableException(`O usuario não pode ser criado, verifique se as informações estão corretas`);
     }
-    catch{
-      throw new NotAcceptableException(`O usuario não pode ser criado, verifique se as informações estão corretas`)
+  }
+
+  async modificarUsuario(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario> {
+    const usuarioAchado = await this.listarUsuarioPorId(id);
+    this.usuarioRepository.merge(usuarioAchado, updateUsuarioDto);
+    return this.usuarioRepository.save(usuarioAchado);
+  }
+
+  async deletarUsuario(id: number): Promise<void> {
+    const usuarioAchado = await this.listarUsuarioPorId(id);
+    await this.usuarioRepository.remove(usuarioAchado);
+  }
+
+  async findOneByLogin(chave: string): Promise<Usuario | undefined> {
+    return this.usuarioRepository.findOne({ where: { chave } });
+  }
+
+  async findOneByChave(chave: string): Promise<Usuario> {
+    return this.usuarioRepository.findOne({ where: { chave } });
+  }
+
+  async findOneById(id: number): Promise<Usuario> {
+    return this.usuarioRepository.findOne({ where: { id } });
+  }
+
+  async getUserRole(id: number): Promise<string> {
+    const gestor = await this.gestorRepository.findOne({ where: { usuarioId: id } });
+    if (gestor) {
+      const sede = await this.sedeRepository.findOne({ where: { gestorId: gestor.id } });
+      return sede ? 'Gestor de Sede' : 'Gestor';
     }
-  } 
-
-  async modificarUsuario(id:number, updateUsuarioDto: UpdateUsuarioDto): Promise<Usuario>{
-    
-    const UsuarioAchado = await this.listarUsuarioPorId(id);
-
-    this.usuarioRepository.merge(UsuarioAchado, updateUsuarioDto);
-    
-    return this.usuarioRepository.save(UsuarioAchado)
+    const membro = await this.membroRepository.findOne({ where: { usuarioId: id } });
+    return membro ? 'Membro' : 'Unknown';
   }
-
-  async DeletarMembro(id: number): Promise<void>{
-    const UsuarioAchado = await this.listarUsuarioPorId(id);
-    await this.usuarioRepository.remove(UsuarioAchado);
-  }
-
 }

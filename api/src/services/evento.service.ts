@@ -23,6 +23,24 @@ export class EventoService {
     }
   }
 
+  async getEventosPorGestorDeSede(gestorId: number): Promise<Evento[]> {
+    return this.eventoRepository.find({ where: { congregacao: { gestorId } } });
+  }
+
+  async getEventosPorCongregacao(congregacaoId: number): Promise<Evento[]> {
+    return this.eventoRepository.find({ where: { congregacaoId } });
+  }
+
+  async listarEventosParaGestorDeSede(): Promise<Evento[]> {
+    return this.eventoRepository.find({ relations: ['congregacao'] });
+  }
+
+  async listarEventosParaGestor(congregacaoId: number): Promise<Evento[]> {
+    return this.eventoRepository.find({
+      where: { congregacaoId }
+    });
+  }
+
   async ListarEventos(): Promise<Evento[]> {
     const ListaEventos = await this.eventoRepository.find();
     if(!ListaEventos){
@@ -59,8 +77,8 @@ export class EventoService {
   }
   }
 
- async RemoverEvento(id: number): Promise<void> {
-  const EventoAchado = await this.ListarEventoPorId(id);
-  await this.eventoRepository.remove(EventoAchado);
+  async RemoverEvento(id: number): Promise<void> {
+    const EventoAchado = await this.ListarEventoPorId(id);
+    await this.eventoRepository.remove(EventoAchado);
   }
 }
