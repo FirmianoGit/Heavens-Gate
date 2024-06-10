@@ -22,6 +22,21 @@ export class CongregacaoController {
     return this.congregacaoService.ListarCongregacoesPorId(id);
   }
 
+  @Get(':id/gestor')
+  ListarCongregacaoPorIdDoGestor(@Param('id') id: number) {
+    return this.congregacaoService.ListarCongregacoesPorIdDoGestor(id);
+  }
+
+  @Get(':id/membros')
+  ListarMembrosDaCongregacao(@Param('id') id: number) {
+    return this.congregacaoService.ListarMembros(id);
+  }
+
+  @Get(':id/eventos')
+  ListarEventosDaCongregacao(@Param('id') id: number) {
+    return this.congregacaoService.ListarEventos(id);
+  }
+
   @Put(':id')
   ModificarCongragacao(@Param('id') id: number, @Body() updateCongregacaoDto: UpdateCongregacaoDto) {
     return this.congregacaoService.ModificarCongregacao(id, updateCongregacaoDto);

@@ -1,15 +1,18 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateEventoDto } from '../common/dto/evento/create-evento.dto';
 import { UpdateEventoDto } from '../common/dto/evento/update-evento.dto';
 import { FindOneOptions, Repository } from 'typeorm';
 import { Evento } from 'src/models/evento.entity';
+import { Gestor } from 'src/models/gestor.entity';
 
 @Injectable()
 export class EventoService {
 
   constructor(
     @Inject('EVENTO_REPOSITORY')
-    private readonly eventoRepository: Repository<Evento>
+    private readonly eventoRepository: Repository<Evento>,
+    @Inject('GESTOR_REPOSITORY')
+    private readonly gestorRepository: Repository<Gestor>
   ) {}
 
   async CriarEvento(createEventoDto: CreateEventoDto): Promise<Evento> {
@@ -24,11 +27,20 @@ export class EventoService {
   }
 
   async getEventosPorGestorDeSede(gestorId: number): Promise<Evento[]> {
-    return this.eventoRepository.find({ where: { congregacao: { gestorId } } });
-  }
+    try {
+      // Verifica se o gestor existe
+      const gestor = await this.gestorRepository.findOne({ where: { id: gestorId } });
+      if (!gestor) {
+        throw new NotFoundException(`Gestor com id ${gestorId} não encontrado`);
+      }
 
-  async getEventosPorCongregacao(congregacaoId: number): Promise<Evento[]> {
-    return this.eventoRepository.find({ where: { congregacaoId } });
+      // Busca os eventos associados às congregações geridas pelo gestor
+      const eventos = await this.eventoRepository.find({ where: { congregacao: { gestorId } } });
+      return eventos;
+    } catch (error) {
+      // Logging de erro, se necessário
+      throw new InternalServerErrorException('Erro ao listar eventos');
+    }
   }
 
   async listarEventosParaGestorDeSede(): Promise<Evento[]> {

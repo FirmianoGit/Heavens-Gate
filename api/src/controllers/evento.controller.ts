@@ -38,10 +38,6 @@ export class EventoController {
     return this.eventoService.getEventosPorGestorDeSede(gestorId);
   }
 
-  @Get('/gestor/:congregacaoId')
-  getEventosPorCongregacao(@Param('congregacaoId') congregacaoId: number) {
-    return this.eventoService.getEventosPorCongregacao(congregacaoId);
-  }
 
   @Put(':id')
   ModificarEvento(@Param('id') id: string, @Body() updateEventoDto: UpdateEventoDto) {

@@ -19,10 +19,10 @@ import {
     @Column("varchar", { name: "DESCRICAO", length: 99 })
     descricao: string;
   
-    @Column("timestamp", { name: "DATA_INICIO" })
+    @Column("date", { name: "DATA_INICIO" })
     dataInicio: Date;
   
-    @Column("timestamp", { name: "DATA_FIM" })
+    @Column("date", { name: "DATA_FIM" })
     dataFim: Date;
   
     @Column("int", { name: "CONGREGACAO_ID", nullable: true })

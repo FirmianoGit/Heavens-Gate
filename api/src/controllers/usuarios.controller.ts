@@ -24,8 +24,13 @@ export class UsuariosController {
 
   @Get(':id/role')
   async getRole(@Param('id') id: number) {
-    const role = await this.usuariosService.getUserRole(id);
+    const role = await this.usuariosService.PegarCargoUsuario(id);
     return { role };
+  }
+  
+  @Get(':string/chave')
+  async PegarUsuarioPorLogin(@Param('string') chave: string) {
+    return this.usuariosService.ListarUsuarioPorLogin(chave);
   }
 
   @Put(':id')

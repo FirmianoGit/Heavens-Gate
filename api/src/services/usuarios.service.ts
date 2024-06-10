@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, NotAcceptableException } from '@nestjs/common';
+import { Injectable, NotFoundException, NotAcceptableException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Usuario } from '../models/usuario.entity';
@@ -11,13 +11,16 @@ import { UpdateUsuarioDto } from '../common/dto/usuario/update-usuario.dto';
 @Injectable()
 export class UsuariosService {
   constructor(
-    @InjectRepository(Usuario)
+    @Inject('USUARIO_REPOSITORY')
     private usuarioRepository: Repository<Usuario>,
-    @InjectRepository(Gestor)
+
+    @Inject('GESTOR_REPOSITORY')
     private gestorRepository: Repository<Gestor>,
-    @InjectRepository(Sede)
+
+    @Inject('SEDE_REPOSITORY')
     private sedeRepository: Repository<Sede>,
-    @InjectRepository(Membro)
+
+    @Inject('MEMBRO_REPOSITORY')
     private membroRepository: Repository<Membro>,
   ) {}
 
@@ -53,19 +56,11 @@ export class UsuariosService {
     await this.usuarioRepository.remove(usuarioAchado);
   }
 
-  async findOneByLogin(chave: string): Promise<Usuario | undefined> {
+  async ListarUsuarioPorLogin(chave: string): Promise<Usuario | undefined> {
     return this.usuarioRepository.findOne({ where: { chave } });
   }
 
-  async findOneByChave(chave: string): Promise<Usuario> {
-    return this.usuarioRepository.findOne({ where: { chave } });
-  }
-
-  async findOneById(id: number): Promise<Usuario> {
-    return this.usuarioRepository.findOne({ where: { id } });
-  }
-
-  async getUserRole(id: number): Promise<string> {
+  async PegarCargoUsuario(id: number): Promise<string> {
     const gestor = await this.gestorRepository.findOne({ where: { usuarioId: id } });
     if (gestor) {
       const sede = await this.sedeRepository.findOne({ where: { gestorId: gestor.id } });

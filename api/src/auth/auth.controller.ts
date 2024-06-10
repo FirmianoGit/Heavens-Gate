@@ -17,13 +17,13 @@ export class AuthController {
       throw new UnauthorizedException();
     }
     const token = await this.authService.login(user);
-    const role = await this.usuariosService.getUserRole(user.id);
+    const role = await this.usuariosService.PegarCargoUsuario(user.id);
     return { ...token, role };
   }
 
   @Get('role/:id')
   async getRole(@Param('id') id: number) {
-    const role = await this.usuariosService.getUserRole(id);
+    const role = await this.usuariosService.PegarCargoUsuario(id);
     return { role };
   }
 }
