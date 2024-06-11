@@ -12,7 +12,7 @@ import {
   import { Usuario } from "./usuario.entity";
 
   @Index("CPF", ["cpf"], { unique: true })
-  @Index("USUARIO_ID", ["usuarioId"], {})
+  @Index("ID", ["id"], {})
   @Entity("gestor", { schema: "heavenpath" })
   
   export class Gestor {
@@ -25,14 +25,11 @@ import {
   
     @Column("varchar", { name: "CPF", unique: true, length: 15 })
     cpf: string;
-  
-    @Column("int", { name: "USUARIO_ID", nullable: true })
-    usuarioId: number | null;
 
     @OneToMany(() => Congregacao, (congregacao) => congregacao.gestorId)
     congregacaos: Congregacao[];
 
-    @JoinColumn([{ name: "USUARIO_ID", referencedColumnName: "id" }])
+    @JoinColumn([{ name: "id", referencedColumnName: "id" }])
     usuario: Usuario;
 
     @OneToMany(() => Sede, (sede) => sede.gestor)

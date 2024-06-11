@@ -18,7 +18,7 @@ import { Grupo } from "src/models/grupo.entity";
 @Index("IDENTIDADE", ["identidade"], { unique: true })
 @Index("CPF", ["cpf"], { unique: true })
 @Index("CONGREGACAO_ID", ["congregacaoId"], {})
-@Index("USUARIO_ID", ["usuarioId"], {})
+@Index("ID", ["id"], {})
 @Entity("membro", { schema: "heavenpath" })
 export class Membro {
   @PrimaryGeneratedColumn({ type: "int", name: "ID" })
@@ -129,9 +129,6 @@ export class Membro {
   @Column("int", { name: "CONGREGACAO_ID", nullable: true })
   congregacaoId: number | null;
 
-  @Column("int", { name: "USUARIO_ID", nullable: true })
-  usuarioId: number | null;
-
   @OneToMany(() => Frequenta, (frequenta) => frequenta.membro)
   frequentas: Frequenta[];
 
@@ -149,7 +146,7 @@ export class Membro {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
-  @JoinColumn([{ name: "USUARIO_ID", referencedColumnName: "id" }])
+  @JoinColumn([{ name: "ID", referencedColumnName: "id" }])
   usuario: Usuario;
 
   @ManyToMany(() => Grupo, (grupo) => grupo.membros)
