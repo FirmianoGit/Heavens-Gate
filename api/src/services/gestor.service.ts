@@ -2,7 +2,7 @@ import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateGestorDto } from '../common/dto/gestor/create-gestor.dto';
 import { UpdateGestorDto } from '../common/dto/gestor/update-gestor.dto';
 import { FindOneOptions, Repository } from 'typeorm';
-import { Gestor } from 'src/models/gestor.entity';
+import { Gestor } from 'src/entities/gestor.entity';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 import { PipelinePromise } from 'stream';
 

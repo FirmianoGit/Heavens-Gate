@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { CreateHistoricoDto } from '../common/dto/historico/create-historico.dto';
 import { UpdateHistoricoDto } from '../common/dto/historico/update-historico.dto';
-import { Historico } from 'src/models/historico.entity';
+import { Historico } from 'src/entities/historico.entity';
 import { FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()

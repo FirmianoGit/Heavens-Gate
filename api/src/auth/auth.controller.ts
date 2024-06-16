@@ -1,29 +1,18 @@
-import { Controller, Post, Body, UnauthorizedException, Get, Req } from '@nestjs/common';
+import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UsuariosService } from '../services/usuarios.service';
-import { Param } from '@nestjs/common';
+import { LocalAuthGuard } from './Guards/local-auth.guard';
+import { AuthRequest } from './Auth-models/AuthRequest';
+import { IsPublic } from './Decorators/is-public.decorator';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly usuariosService: UsuariosService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
+  @IsPublic()
   @Post('login')
-  async login(@Body() body: { chave: string; senha: string }) {
-    const user = await this.authService.validateUser(body.chave, body.senha);
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-    const token = await this.authService.login(user);
-    const role = await this.usuariosService.PegarCargoUsuario(user.id);
-    return { ...token, role };
-  }
-
-  @Get('role/:id')
-  async getRole(@Param('id') id: number) {
-    const role = await this.usuariosService.PegarCargoUsuario(id);
-    return { role };
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(LocalAuthGuard)
+    async login(@Request() req: AuthRequest) {
+    return this.authService.login(req.user);
   }
 }

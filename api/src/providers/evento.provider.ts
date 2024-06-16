@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Evento } from '../models/evento.entity';
+import { Evento } from '../entities/evento.entity';
 
 export const eventoProviders = [
   {

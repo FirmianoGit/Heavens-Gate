@@ -1,28 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { Usuario } from 'src/entities/usuario.entity';
+import { UsuariosService } from 'src/services/usuarios.service';
+import { UserPayload } from './Auth-models/UserPayload';
 import { JwtService } from '@nestjs/jwt';
-import { UsuariosService } from '../services/usuarios.service';
+import { UserToken } from './Auth-models/UserToken';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly usuariosService: UsuariosService,
-    private readonly jwtService: JwtService,
-  ) {}
 
-  async validateUser(chave: string, senha: string): Promise<any> {
-    const user = await this.usuariosService.ListarUsuarioPorLogin(chave);
-    if (user && user.senha === senha) {
-      const { senha, ...result } = user;
-      return result;
+  constructor(
+    private readonly userService: UsuariosService, 
+    private readonly jwtservice: JwtService) {}
+
+  async ValidarUsuario(chave: string, senha: string) {
+    const Usuario = await this.userService.ListarUsuarioPorLogin(chave);
+
+    if (Usuario) {
+      const SenhaValida = await bcrypt.compare(senha, Usuario.senha);
+      if (SenhaValida) {
+        return {
+          ...Usuario,
+          senha: undefined,
+        };
+      }
     }
-    return null;
+    throw new UnauthorizedException('Endereço de email ou senha inseridos estão incorretos!');
   }
 
-  async login(user: any) {
-    const payload = { username: user.chave, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-      user_id: user.id,
+  async login(usuario: Usuario): Promise<UserToken> {
+    const payload: UserPayload = {
+        sub: usuario.id,
+        chave: usuario.chave,
     };
+
+    const JwtToken = this.jwtservice.sign(payload);
+    return {
+      access_token: JwtToken
+    }
   }
 }

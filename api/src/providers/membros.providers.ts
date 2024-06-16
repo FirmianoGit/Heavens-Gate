@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Membro } from 'src/models/membros.entity';
+import { Membro } from 'src/entities/membros.entity';
 
 export const membroProviders = [
   {

@@ -10,7 +10,7 @@ import {
   import { Gestor } from "./gestor.entity";
 import { Sede } from "./sede.entity";
 import { Evento } from "./evento.entity";
-import { Grupo } from "src/models/grupo.entity";
+import { Grupo } from "src/entities/grupo.entity";
 import { Membro } from "./membros.entity";
 
 @Index("GESTOR_ID", ["gestorId"], {})

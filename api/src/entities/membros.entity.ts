@@ -1,5 +1,5 @@
 import { Frequenta } from "./frequenta.entity";
-import { Usuario } from "src/models/usuario.entity";
+import { Usuario } from "src/entities/usuario.entity";
 import {
   Column,
   Entity,
@@ -13,7 +13,7 @@ import {
 } from "typeorm";
 import { Historico } from "./historico.entity";
 import { Congregacao } from "./congregacao.entity";
-import { Grupo } from "src/models/grupo.entity";
+import { Grupo } from "src/entities/grupo.entity";
 
 @Index("IDENTIDADE", ["identidade"], { unique: true })
 @Index("CPF", ["cpf"], { unique: true })

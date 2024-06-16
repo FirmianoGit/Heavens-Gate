@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from '../controllers/app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from '../auth/auth.module';
 import { AppService } from '../services/app.service';
 import { membroModule } from './membros.module';
 import { CongregacaoModule } from './congregacao.module';
@@ -12,6 +11,9 @@ import { HistoricoModule } from 'src/modules/historico.module';
 import { GrupoModule } from './grupo.module';
 import { FrequentaModule } from './frequenta.module';
 import { EventoModule } from './evento.module';
+import { AuthModule } from 'src/auth/auth.module';
+import { JwtAuthGuard } from 'src/auth/Guards/jwt-auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 
 @Module({
@@ -38,6 +40,11 @@ import { EventoModule } from './evento.module';
     EventoModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    }
+  ],
 })
 export class AppModule {}

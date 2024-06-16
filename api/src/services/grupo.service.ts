@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { CreateGrupoDto } from '../common/dto/grupo/create-grupo.dto';
 import { UpdateGrupoDto } from '../common/dto/grupo/update-grupo.dto';
-import { Grupo } from '../models/grupo.entity';
+import { Grupo } from '../entities/grupo.entity';
 import { FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()

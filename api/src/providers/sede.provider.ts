@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Sede } from 'src/models/sede.entity';
+import { Sede } from 'src/entities/sede.entity';
 
 export const sedeProviders = [
   {

@@ -2,8 +2,8 @@ import { HttpException, HttpStatus, Inject, Injectable, InternalServerErrorExcep
 import { CreateEventoDto } from '../common/dto/evento/create-evento.dto';
 import { UpdateEventoDto } from '../common/dto/evento/update-evento.dto';
 import { FindOneOptions, Repository } from 'typeorm';
-import { Evento } from 'src/models/evento.entity';
-import { Gestor } from 'src/models/gestor.entity';
+import { Evento } from 'src/entities/evento.entity';
+import { Gestor } from 'src/entities/gestor.entity';
 
 @Injectable()
 export class EventoService {

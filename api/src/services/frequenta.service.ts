@@ -2,7 +2,7 @@ import { Inject, Injectable, NotAcceptableException, NotFoundException } from '@
 import { CreateFrequentaDto } from '../common/dto/frequenta/create-frequenta.dto';
 import { UpdateFrequentaDto } from '../common/dto/frequenta/update-frequenta.dto';
 import { FindOneOptions, Repository } from 'typeorm';
-import { Frequenta } from '../models/frequenta.entity';
+import { Frequenta } from '../entities/frequenta.entity';
 
 @Injectable()
 export class FrequentaService {

@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/
 import { EventoService } from '../services/evento.service';
 import { CreateEventoDto } from '../common/dto/evento/create-evento.dto';
 import { UpdateEventoDto } from '../common/dto/evento/update-evento.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('evento')
 export class EventoController {

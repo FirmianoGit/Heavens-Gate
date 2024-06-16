@@ -1,11 +1,11 @@
 import { Inject, Injectable, InternalServerErrorException, NotAcceptableException, NotFoundException } from '@nestjs/common';
-import { Congregacao } from 'src/models/congregacao.entity';
+import { Congregacao } from 'src/entities/congregacao.entity';
 import { CreateCongregacaoDto } from '../common/dto/congregacao/create-congregacao.dto';
 import { UpdateCongregacaoDto } from '../common/dto/congregacao/update-congregacao.dto';
 import { FindOneOptions, Repository } from 'typeorm';
-import { Gestor } from 'src/models/gestor.entity';
-import { Membro } from 'src/models/membros.entity';
-import { Evento } from 'src/models/evento.entity';
+import { Gestor } from 'src/entities/gestor.entity';
+import { Membro } from 'src/entities/membros.entity';
+import { Evento } from 'src/entities/evento.entity';
 import { EventoModule } from 'src/modules/evento.module';
 
 @Injectable()

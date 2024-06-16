@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Historico } from '../models/historico.entity';
+import { Historico } from '../entities/historico.entity';
 
 export const historicoProviders = [
   {

@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Frequenta } from '../models/frequenta.entity';
+import { Frequenta } from '../entities/frequenta.entity';
 
 export const frequentaProviders = [
   {

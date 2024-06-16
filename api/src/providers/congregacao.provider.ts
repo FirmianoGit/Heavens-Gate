@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Congregacao } from '../models/congregacao.entity';
+import { Congregacao } from '../entities/congregacao.entity';
 
 export const congregacaoProviders = [
   {

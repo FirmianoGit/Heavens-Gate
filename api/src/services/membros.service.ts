@@ -1,6 +1,6 @@
 import { Injectable, Inject, NotFoundException, NotAcceptableException } from '@nestjs/common';
 import { FindOneOptions, Repository } from 'typeorm';
-import { Membro } from 'src/models/membros.entity';
+import { Membro } from 'src/entities/membros.entity';
 import { CreateMembrosDto } from '../common/dto/membro/create-membros.dto';
 import { UpdateMembroDto } from '../common/dto/membro/update-membros.dto';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';

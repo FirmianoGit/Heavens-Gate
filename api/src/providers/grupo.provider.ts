@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Grupo } from 'src/models/grupo.entity';
+import { Grupo } from 'src/entities/grupo.entity';
 
 export const grupoProviders = [
   {

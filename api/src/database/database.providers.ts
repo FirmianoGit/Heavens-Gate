@@ -1,12 +1,12 @@
-import { Usuario } from 'src/models/usuario.entity';
-import { Congregacao } from 'src/models/congregacao.entity';
-import { Evento } from 'src/models/evento.entity';
-import { Frequenta } from 'src/models/frequenta.entity';
-import { Gestor } from 'src/models/gestor.entity';
-import { Grupo } from 'src/models/grupo.entity';
-import { Historico } from 'src/models/historico.entity';
-import { Membro } from 'src/models/membros.entity';
-import { Sede } from 'src/models/sede.entity';
+import { Usuario } from 'src/entities/usuario.entity';
+import { Congregacao } from 'src/entities/congregacao.entity';
+import { Evento } from 'src/entities/evento.entity';
+import { Frequenta } from 'src/entities/frequenta.entity';
+import { Gestor } from 'src/entities/gestor.entity';
+import { Grupo } from 'src/entities/grupo.entity';
+import { Historico } from 'src/entities/historico.entity';
+import { Membro } from 'src/entities/membros.entity';
+import { Sede } from 'src/entities/sede.entity';
 import { DataSource } from 'typeorm';
 
 export const databaseProviders = [

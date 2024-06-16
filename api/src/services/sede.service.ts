@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable, NotAcceptableException }
 import { CreateSedeDto } from '../common/dto/Sede/create-sede.dto';
 import { UpdateSedeDto } from '../common/dto/Sede/update-sede.dto';
 import { Repository } from 'typeorm';
-import { Sede } from 'src/models/sede.entity';
+import { Sede } from 'src/entities/sede.entity';
 
 @Injectable()
 export class SedeService {

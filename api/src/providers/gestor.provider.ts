@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Gestor } from '../models/gestor.entity';
+import { Gestor } from '../entities/gestor.entity';
 
 export const gestorProviders = [
   {

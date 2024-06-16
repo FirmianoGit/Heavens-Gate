@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException, NotAcceptableException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Usuario } from '../models/usuario.entity';
-import { Gestor } from '../models/gestor.entity';
-import { Sede } from '../models/sede.entity';
-import { Membro } from '../models/membros.entity';
+import { Usuario } from '../entities/usuario.entity';
+import { Gestor } from '../entities/gestor.entity';
+import { Sede } from '../entities/sede.entity';
+import { Membro } from '../entities/membros.entity';
 import { CreateUsuarioDto } from '../common/dto/usuario/create-usuario.dto';
 import { UpdateUsuarioDto } from '../common/dto/usuario/update-usuario.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuariosService {
@@ -38,8 +39,15 @@ export class UsuariosService {
 
   async criarUsuario(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     try {
-      const novoUsuario = this.usuarioRepository.create(createUsuarioDto);
-      return this.usuarioRepository.save(novoUsuario);
+      const novoUsuario : Usuario = this.usuarioRepository.create({
+        ...createUsuarioDto,
+        senha: await bcrypt.hash(createUsuarioDto.senha, 10)
+      });
+      this.usuarioRepository.save(novoUsuario);
+      return {
+        ...novoUsuario,
+        senha: undefined
+      }
     } catch {
       throw new NotAcceptableException(`O usuario não pode ser criado, verifique se as informações estão corretas`);
     }

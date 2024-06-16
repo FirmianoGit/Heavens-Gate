@@ -5,8 +5,8 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
   } from 'typeorm';
-  import { Gestor } from "src/models/gestor.entity"; 
-  import { Membro } from "src/models/membros.entity";
+  import { Gestor } from "src/entities/gestor.entity"; 
+  import { Membro } from "src/entities/membros.entity";
   
   @Index("CHAVE", ["chave"], { unique: true })
   @Index("SENHA", ["senha"], { unique: true })
@@ -18,7 +18,7 @@ import {
     @Column("varchar", { name: "CHAVE", unique: true, length: 99 })
     chave: string;
   
-    @Column("varchar", { name: "SENHA", unique: true, length: 45 })
+    @Column("varchar", { name: "SENHA", unique: true, length: 200 })
     senha: string;
   
     @OneToMany(() => Gestor, (gestor) => gestor.usuario)
@@ -27,4 +27,4 @@ import {
     @OneToMany(() => Membro, (membro) => membro.usuario)
     membros: Membro[];
   }
-  
+   

@@ -7,8 +7,8 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
   } from "typeorm";
-  import { Congregacao } from "src/models/congregacao.entity";
-  import { Membro } from "src/models/membros.entity";
+  import { Congregacao } from "src/entities/congregacao.entity";
+  import { Membro } from "src/entities/membros.entity";
   
   @Index("CONGREGACAO_ID", ["congregacaoId"], {})
   @Entity("grupo", { schema: "heavenpath" })

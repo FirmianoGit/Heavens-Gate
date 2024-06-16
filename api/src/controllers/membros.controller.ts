@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { membroService } from '../services/membros.service';
-import { Membro } from '../models/membros.entity';
+import { Membro } from '../entities/membros.entity';
 import { CreateMembrosDto } from '../common/dto/membro/create-membros.dto'
 import { UpdateMembroDto } from '../common/dto/membro/update-membros.dto';
 

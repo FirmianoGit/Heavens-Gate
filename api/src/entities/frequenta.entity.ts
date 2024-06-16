@@ -1,5 +1,5 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from "typeorm";
-import { Membro } from "src/models/membros.entity";
+import { Membro } from "src/entities/membros.entity";
 import { Evento } from "./evento.entity"; 
 
 @Index("EVENTO_ID", ["eventoId"],  {})
