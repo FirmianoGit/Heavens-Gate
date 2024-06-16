@@ -45,23 +45,7 @@ export class CongregacaoService {
     return congregacaoEncontrada
   }
 
-  async ListarCongregacoesPorIdDoGestor(id: number): Promise<Congregacao[]> {
-    try {
-      // Verifica se o gestor existe
-      const gestor = await this.gestorRepository.findOne({ where: { id } });
-      if (!gestor) {
-        throw new NotFoundException(`Gestor com id ${id} não encontrado`);
-      }
 
-      // Busca as congregações associadas ao gestor
-      const congregacoes = await this.congregacaoRepository.findBy({ gestorId: id });
-      
-      return congregacoes;
-    } catch (error) {
-      // Logging de erro
-      throw new InternalServerErrorException('Erro ao listar congregações');
-    }
-  }
 
   async CriarCongregacao(createCongregacaoDto: CreateCongregacaoDto): Promise<Congregacao>{
 

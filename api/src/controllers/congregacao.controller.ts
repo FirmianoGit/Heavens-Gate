@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { CongregacaoService } from '../services/congregacao.service';
 import { CreateCongregacaoDto } from '../common/dto/congregacao/create-congregacao.dto';
 import { UpdateCongregacaoDto } from '../common/dto/congregacao/update-congregacao.dto';
@@ -22,11 +31,6 @@ export class CongregacaoController {
     return this.congregacaoService.ListarCongregacoesPorId(id);
   }
 
-  @Get(':id/gestor')
-  ListarCongregacaoPorIdDoGestor(@Param('id') id: number) {
-    return this.congregacaoService.ListarCongregacoesPorIdDoGestor(id);
-  }
-
   @Get(':id/membros')
   ListarMembrosDaCongregacao(@Param('id') id: number) {
     return this.congregacaoService.ListarMembros(id);
@@ -38,8 +42,14 @@ export class CongregacaoController {
   }
 
   @Put(':id')
-  ModificarCongragacao(@Param('id') id: number, @Body() updateCongregacaoDto: UpdateCongregacaoDto) {
-    return this.congregacaoService.ModificarCongregacao(id, updateCongregacaoDto);
+  ModificarCongragacao(
+    @Param('id') id: number,
+    @Body() updateCongregacaoDto: UpdateCongregacaoDto,
+  ) {
+    return this.congregacaoService.ModificarCongregacao(
+      id,
+      updateCongregacaoDto,
+    );
   }
 
   @Delete(':id')

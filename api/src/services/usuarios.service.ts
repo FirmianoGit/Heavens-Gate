@@ -68,13 +68,13 @@ export class UsuariosService {
     return this.usuarioRepository.findOne({ where: { chave } });
   }
 
-  async PegarCargoUsuario(id: number): Promise<string> {
-    const gestor = await this.gestorRepository.findOne({ where: { usuarioId: id } });
+  async PegarCargoUsuario(id: number): Promise<number> {
+    const gestor = await this.gestorRepository.findOne({ where: { id: id } });
     if (gestor) {
       const sede = await this.sedeRepository.findOne({ where: { gestorId: gestor.id } });
-      return sede ? 'Gestor de Sede' : 'Gestor';
+      return sede ? 1 : 2;
     }
-    const membro = await this.membroRepository.findOne({ where: { usuarioId: id } });
-    return membro ? 'Membro' : 'Unknown';
+    const membro = await this.membroRepository.findOne({ where: { id } });
+    return membro ? 3 : null ;
   }
 }
